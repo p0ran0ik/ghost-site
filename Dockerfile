@@ -1,17 +1,23 @@
-FROM nginx:latest
+# Используем официальный образ nginx
+FROM nginx:alpine
 
-# Установите рабочий каталог
-WORKDIR /root/site
+# Устанавливаем переменную окружения для директории сайта
+ENV SITE_DIR=/root/site
 
-# Скопируйте файлы из репозитория в контейнер
-COPY . /root/site
+# Создаем директорию для сайта
+RUN mkdir -p $SITE_DIR
 
-# Экспонировать порт 80
-EXPOSE 80
+# Клонируем репозиторий с вашим сайтом
+RUN git clone https://github.com/p0ran0ik/ghost-site $SITE_DIR
 
-# Настройте nginx
+# Удаляем стандартную конфигурацию Nginx
 RUN rm /etc/nginx/conf.d/default.conf
+
+# Копируем нашу конфигурацию Nginx в контейнер
 COPY nginx.conf /etc/nginx/conf.d/
 
-# Запустите nginx
+# Открываем порт 80 для доступа к Nginx
+EXPOSE 80
+
+# Запускаем Nginx
 CMD ["nginx", "-g", "daemon off;"]
