@@ -4,7 +4,7 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - "8080:80"  # проксирование порта 80 контейнера на порт 8080 хоста
+      - "80:80"  # проксирование порта 80 контейнера на порт 8080 хоста
     volumes:
-      - ./ghost-site:/usr/share/nginx/html:ro  # монтируем директорию с HTML в директорию Nginx
+      - ./:/usr/share/nginx/html:ro  # монтируем директорию с HTML в директорию Nginx
     restart: always
