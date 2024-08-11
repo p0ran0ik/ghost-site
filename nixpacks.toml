@@ -1,3 +1,3 @@
-[phases]
-build = "echo 'Build phase not required for static site'"
-start = "nginx -c /root/site/nginx.conf"
+[build]
+base = "alpine"
+packages = ["nginx"]
